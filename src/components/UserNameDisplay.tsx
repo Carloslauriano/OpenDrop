@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Edit2 } from "lucide-react"
+import { base, pt_BR, en, Faker } from '@faker-js/faker';
 
 export function UserNameDisplay() {
   const [userName, setUserName] = useState("")
@@ -14,6 +15,11 @@ export function UserNameDisplay() {
     const storedName = localStorage.getItem("userName")
     if (storedName) {
       setUserName(storedName)
+    } else {
+      const customFaker = new Faker({
+        locale: [base, pt_BR, en],
+      });
+      setUserName(customFaker.person.fullName())
     }
   }, [])
 
