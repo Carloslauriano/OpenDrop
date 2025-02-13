@@ -1,67 +1,67 @@
 # OpenDrop (Snapdrop Revival)
 
-Bem-vindo ao Snapdrop Revival, uma versão moderna do antigo Snapdrop para aqueles que sentem saudades dele. Este projeto visa trazer de volta a simplicidade e a eficiência do Snapdrop original, permitindo a transferência de arquivos entre dispositivos na mesma rede local.
+Welcome to Snapdrop Revival, a modern version of the old Snapdrop for those who miss it. This project aims to bring back the simplicity and efficiency of the original Snapdrop, allowing file transfers between devices on the same local network.
 
-## Funcionalidades
+## Features
 
-- **Transferência Rápida de Arquivos**: Envie arquivos rapidamente entre dispositivos conectados à mesma rede.
-- **Interface Simples e Intuitiva**: Uma interface de usuário limpa e fácil de usar, inspirada no design original do Snapdrop.
-- **Compatibilidade Multiplataforma**: Funciona em qualquer dispositivo com um navegador moderno, incluindo desktops, laptops, smartphones e tablets.
-- **Segurança**: Transferências de arquivos seguras utilizando WebRTC.
+- **Fast File Transfers**: Quickly send files between devices connected to the same network.  
+- **Simple and Intuitive Interface**: A clean and easy-to-use user interface inspired by the original Snapdrop design.  
+- **Cross-Platform Compatibility**: Works on any device with a modern browser, including desktops, laptops, smartphones, and tablets.  
+- **Security**: Secure file transfers using WebRTC.  
 
-## Instalação
+## Installation
 
-Para instalar e executar o Snapdrop Revival localmente, siga os passos abaixo:
+To install and run Snapdrop Revival locally, follow these steps:  
 
-1. Clone o repositório:
+1. Clone the repository:  
 
     ```sh
     git clone https://github.com/carloslauriano/OpenDrop.git
     ```
 
-2. Navegue até o diretório do projeto:
+2. Navigate to the project directory:  
 
     ```sh
     cd OpenDrop
     ```
 
-3. Instale as dependências:
+3. Install dependencies:  
 
     ```sh
     npm install
     ```
 
-4. Inicie o servidor:
+4. Start the server:  
 
     ```sh
     npm start
     ```
 
-## Como Contribuir
+## How to Contribute
 
-Contribuições são bem-vindas! Siga os passos abaixo para contribuir:
+Contributions are welcome! Follow these steps to contribute:  
 
-1. Faça um fork do projeto.
-2. Crie uma nova branch:
-
-    ```sh
-    git checkout -b minha-nova-funcionalidade
-    ```
-
-3. Faça as alterações desejadas e commit:
+1. Fork the project.  
+2. Create a new branch:  
 
     ```sh
-    git commit -m 'Adiciona nova funcionalidade'
+    git checkout -b my-new-feature
     ```
 
-4. Envie para o repositório remoto:
+3. Make the desired changes and commit:  
 
     ```sh
-    git push origin minha-nova-funcionalidade
+    git commit -m 'Add new feature'
     ```
 
-5. Abra um Pull Request.
+4. Push to the remote repository:  
 
-## Licença
+    ```sh
+    git push origin my-new-feature
+    ```
 
-Este projeto está licenciado sob a Licença Apache 2.0. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+5. Open a Pull Request.  
+
+## License
+
+This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for more details.  
