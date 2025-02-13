@@ -9,12 +9,12 @@ export default function DeviceList() {
   useEffect(() => {
     // TODO: Implement WebSocket connection to get connected devices
     const mockDevices = [
-      "Laptop de João",
-      "iPhone de Maria",
-      "Tablet de Carlos",
-      "PC de Ana",
-      "Android de Pedro",
-      "MacBook de Laura",
+      "mock:Laptop de João",
+      "mock:iPhone de Maria",
+      "mock:Tablet de Carlos",
+      "mock:PC de Ana",
+      "mock:Android de Pedro",
+      "mock:MacBook de Laura",
     ]
     setDevices(mockDevices)
   }, [])
