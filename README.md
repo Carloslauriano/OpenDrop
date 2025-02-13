@@ -1,4 +1,4 @@
-# OpenDrop (Snapdrop Revival)
+# Openddrop (Snapdrop Revival)
 
 Welcome to Snapdrop Revival, a modern version of the old Snapdrop for those who miss it. This project aims to bring back the simplicity and efficiency of the original Snapdrop, allowing file transfers between devices on the same local network.
 
