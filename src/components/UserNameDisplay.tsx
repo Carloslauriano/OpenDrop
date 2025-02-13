@@ -19,7 +19,7 @@ export function UserNameDisplay() {
       const customFaker = new Faker({
         locale: [base, pt_BR, en],
       });
-      setUserName(customFaker.person.fullName())
+      setUserName(customFaker.person.firstName())
     }
   }, [])
 
@@ -48,7 +48,7 @@ export function UserNameDisplay() {
       ) : (
         <div className="flex items-center space-x-2">
           <span className="text-lg font-semibold">{userName ? `Seu Nome: ${userName}` : "Defina seu nome"}</span>
-          <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
+          <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)} className="hidden sm:inline-flex">
             <Edit2 className="h-4 w-4" />
           </Button>
         </div>

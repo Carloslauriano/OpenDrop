@@ -9,7 +9,7 @@ import { GitHubIcon } from "@/components/GitHubIcon"
 export default function Home() {
   return (
     <FileReceiveProvider>
-      <header className="container mx-auto p-4 flex justify-between items-center">
+      <header className="container mx-auto p-4 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
         <h1 className="text-2xl font-bold">OpenDrop</h1>
         <UserNameDisplay />
         <div className="flex gap-4">
