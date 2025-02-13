@@ -4,6 +4,7 @@ import { FileReceiveProvider } from "@/lib/fileReceiveContext"
 import { Toaster } from "@/components/ui/toaster"
 import { UserNameDisplay } from "@/components/UserNameDisplay"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { GitHubIcon } from "@/components/GitHubIcon"
 
 export default function Home() {
   return (
@@ -11,7 +12,10 @@ export default function Home() {
       <header className="container mx-auto p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">OpenDrop</h1>
         <UserNameDisplay />
-        <ThemeToggle />
+        <div className="flex gap-4">
+          <GitHubIcon />
+          <ThemeToggle />
+        </div>
       </header>
       <main className="flex min-h-screen flex-col items-center p-24 relative">
         <DeviceList />
