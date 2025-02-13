@@ -33,7 +33,7 @@ export function UserNameDisplay() {
   }
 
   return (
-    <div className="mb-4 flex items-center justify-center">
+    <div className="flex items-center justify-center">
       {isEditing ? (
         <div className="flex items-center space-x-2">
           <Input

@@ -50,7 +50,7 @@ export default function DeviceItem({ name }: DeviceItemProps) {
   }
 
   return (
-    <Card className="cursor-pointer transition-all hover:bg-gray-100" onClick={handleCardClick}>
+    <Card className="cursor-pointer transition-all hover:bg-accent" onClick={handleCardClick}>
       <CardContent className="flex flex-col p-4">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center space-x-2">
