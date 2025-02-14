@@ -16,7 +16,7 @@ type socketMessage = {
   data?: {
     ipLocal?: string;
     uuid?: string;
-    nome?: string;
+    name?: string;
   }
 }
 
@@ -112,7 +112,7 @@ server.register(async function (fastify) {
           const userId = crypto.randomUUID();
           const ip = req.headers['x-forwarded-for'] as string || req.ip;
           const ipLocal = message.data?.ipLocal || 'unknown';
-          const initialName = message.data?.nome || 'unknown';
+          const initialName = message.data?.name || 'unknown';
 
           const connection: Connection = {
             socket,
@@ -146,10 +146,10 @@ server.register(async function (fastify) {
 
         case 'device-name':
           if (!message.data) return;
-          const { uuid, nome } = message.data;
+          const { uuid, name } = message.data;
           const conn = connections.get(uuid!);
           if (conn) {
-            conn.name = nome;
+            conn.name = name;
             // Notify others about name update
             Array.from(connections.values())
               .filter(c => c.ip === conn.ip && c.userId !== uuid)
@@ -157,7 +157,7 @@ server.register(async function (fastify) {
                 c.socket.send(JSON.stringify({
                   type: 'user-renamed',
                   userId: uuid,
-                  name: nome
+                  name
                 }));
               });
           }
