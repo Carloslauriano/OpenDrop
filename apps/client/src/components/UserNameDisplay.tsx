@@ -1,30 +1,40 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Edit2 } from "lucide-react"
 import { base, pt_BR, en, Faker } from '@faker-js/faker';
+import { ConnectionContexto } from "@/contexts/connection-context"
 
 export function UserNameDisplay() {
   const [userName, setUserName] = useState("")
   const [isEditing, setIsEditing] = useState(false)
 
+  const connection  = useContext(ConnectionContexto);
+  if (!connection) throw new Error("ExemploConexao deve ser utilizado dentro do ConnectionProvider");
+  const { setDados } = connection;
+
   useEffect(() => {
-    const storedName = localStorage.getItem("userName")
+    const storedName = localStorage.getItem("userName");
+  
     if (storedName) {
-      setUserName(storedName)
+      setUserName(storedName);
+      setDados((prevDados) => ({ ...prevDados, nome: storedName }));
     } else {
       const customFaker = new Faker({
         locale: [base, pt_BR, en],
       });
-      setUserName(customFaker.person.firstName())
+      const randomName = customFaker.person.firstName();
+      setUserName(randomName);
+      setDados((prevDados) => ({ ...prevDados, nome: randomName }));
     }
-  }, [])
+  }, [setDados]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value)
+    setDados((prevDados) => ({ ...prevDados, nome: e.target.value }));
   }
 
   const handleNameSubmit = () => {
