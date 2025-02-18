@@ -13,7 +13,7 @@ export function UserNameDisplay() {
   const [isEditing, setIsEditing] = useState(false)
 
   const connection  = useContext(UserContexto);
-  if (!connection) throw new Error("ExemploConexao deve ser utilizado dentro do ConnectionProvider");
+  if (!connection) throw new Error("UserNameDisplay deve ser utilizado dentro do ConnectionProvider");
   const { setDados } = connection;
 
   useEffect(() => {
