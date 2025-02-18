@@ -1,6 +1,7 @@
 import fastify, { FastifyRequest } from 'fastify';
 import websocket from '@fastify/websocket';
 import { UAParser } from 'ua-parser-js';
+import { log } from 'console';
 
 
 const server = fastify();
@@ -75,12 +76,12 @@ function notifyUsersOnSameIp(newUser: Connection) {
 
 server.register(async function (fastify) {
   server.get('/ws', { websocket: true }, (socket: WebSocket, req: FastifyRequest) => {
-    
+
     socket.onclose = () => {
       // Remove connection when user disconnects
       const userId = Array.from(connections.entries())
         .find(([_, conn]) => conn.socket === socket)?.[0];
-      
+
       if (userId) {
         const disconnectedUser = connections.get(userId);
         connections.delete(userId);
@@ -132,7 +133,7 @@ server.register(async function (fastify) {
           };
 
           connections.set(userId, connection);
-          
+
           const connectionInfo = {
             type: 'connection',
             userId,
@@ -168,15 +169,15 @@ server.register(async function (fastify) {
           break;
 
         case 'webrtc-offer':
-          
+          console.log('webrtc-offer', message);
           break;
 
         case 'webrtc-answer':
-          
+          console.log('webrtc-answer', message);
           break;
 
         case 'webrtc-candidate':
-          
+          console.log('webrtc-candidate', message);
           break;
 
         default:
