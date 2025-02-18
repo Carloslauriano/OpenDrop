@@ -12,11 +12,15 @@ server.register(websocket, {
 
 
 type socketMessage = {
-  type: 'hello' | 'device-name'
+  type: 'hello' | 'device-name' | 'webrtc-offer' | 'webrtc-answer' | 'webrtc-candidate'
   data?: {
     ipLocal?: string;
     uuid?: string;
     name?: string;
+    target?: string;
+    offer?: any;
+    answer?: any;
+    candidate?: any;
   }
 }
 
@@ -161,6 +165,18 @@ server.register(async function (fastify) {
                 }));
               });
           }
+          break;
+
+        case 'webrtc-offer':
+          
+          break;
+
+        case 'webrtc-answer':
+          
+          break;
+
+        case 'webrtc-candidate':
+          
           break;
 
         default:
