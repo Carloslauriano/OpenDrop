@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Edit2 } from "lucide-react"
 import { base, pt_BR, en, Faker } from '@faker-js/faker';
-import { ConnectionContexto } from "@/contexts/connection-context"
+import { UserContexto } from "@/contexts/user-context"
 
 export function UserNameDisplay() {
   const [userName, setUserName] = useState("")
   const [isEditing, setIsEditing] = useState(false)
 
-  const connection  = useContext(ConnectionContexto);
+  const connection  = useContext(UserContexto);
   if (!connection) throw new Error("ExemploConexao deve ser utilizado dentro do ConnectionProvider");
   const { setDados } = connection;
 

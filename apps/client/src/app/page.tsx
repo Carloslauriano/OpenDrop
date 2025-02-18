@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { UserNameDisplay } from "@/components/UserNameDisplay"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { GitHubIcon } from "@/components/GitHubIcon"
-import { ConnectionProvider } from "@/contexts/connection-context"
+import { UserProvider } from "@/contexts/user-context"
 
 export default function Home() {
   return (
@@ -18,7 +18,7 @@ export default function Home() {
           </div>
         </div>
       </noscript>
-      <ConnectionProvider>
+      <UserProvider>
         <FileReceiveProvider>
           <header className="container mx-auto p-4 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <h1 className="text-2xl font-bold">OpenDrop</h1>
@@ -34,7 +34,7 @@ export default function Home() {
             <Toaster />
           </main>
         </FileReceiveProvider>
-      </ConnectionProvider>
+      </UserProvider>
     </>
   )
 }
