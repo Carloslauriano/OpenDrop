@@ -6,9 +6,25 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
-export const metadata: Metadata = {
+const title = {
   title: "OpenDrop",
   description: "Um revival moderno do Snapdrop para transferência de arquivos local",
+}
+
+export const metadata: Metadata = {
+  ...title,
+  openGraph: {
+    ...title,
+    type: "website",
+    url: process.env.NEXT_PUBLIC_BASE_URL || 'localhost:3000',
+  },
+  twitter: {
+    ...title,
+    card: "summary_large_image",
+  },
+  keywords: ['file', 'transfer', 'local', 'p2p', 'web', 'modern', 'snapdrop', 'opendrop'],
+  creator: 'Carlos Henrique Lauriano',
+  publisher: 'Carlos Henrique Lauriano'
 }
 
 export default function RootLayout({
