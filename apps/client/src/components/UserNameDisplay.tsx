@@ -30,15 +30,31 @@ export function UserNameDisplay() {
       setUserName(randomName);
       setDados((prevDados) => ({ ...prevDados, nome: randomName }));
     }
-  }, [setDados]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value)
-    setDados((prevDados) => ({ ...prevDados, nome: e.target.value }));
   }
 
-  const handleNameSubmit = () => {
+  const handleNameSubmit = () => {    
+    if (userName == ''){
+      const customFaker = new Faker({
+        locale: [base, pt_BR, en],
+      });
+      const randomName = customFaker.person.firstName();
+
+      localStorage.removeItem("userName")
+
+      setUserName(randomName);
+      setDados((prevDados) => ({ ...prevDados, nome: randomName }));
+      setIsEditing(false)
+
+      return
+    }
+
     localStorage.setItem("userName", userName)
+    setDados((prevDados) => ({ ...prevDados, nome: userName }));
     setIsEditing(false)
   }
 

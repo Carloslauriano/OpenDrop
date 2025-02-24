@@ -1,30 +1,76 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import DeviceItem from "./DeviceItem"
+import { useSocket } from "@/hooks/use-socket"
+import { UserContexto } from "@/contexts/user-context"
 
 export default function DeviceList() {
-  const [devices, setDevices] = useState<string[]>([])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [devices, setDevices] = useState<any[]>([])
+  const { isConnected, messages, sendMessage } = useSocket('ws://127.0.0.1:8080/ws')
+
+  const connection = useContext(UserContexto);
+  if (!connection) throw new Error("UserNameDisplay deve ser utilizado dentro do ConnectionProvider");
+  const { dados, setDados } = connection;
 
   useEffect(() => {
-    // TODO: Implement WebSocket connection to get connected devices
-    const mockDevices = [
-      "mock:Laptop de João",
-      "mock:iPhone de Maria",
-      "mock:Tablet de Carlos",
-      "mock:PC de Ana",
-      "mock:Android de Pedro",
-      "mock:MacBook de Laura",
-    ]
-    setDevices(mockDevices)
-  }, [])
+    if (isConnected && dados.nome) {
+      sendMessage(JSON.stringify({ type: 'hello', data: { name: dados.nome } }))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConnected])
+
+  useEffect(() => {
+    const message = JSON.stringify({ type: 'device-name', data: { name: dados.nome, uuid: dados.id } })
+    console.log(message);
+    
+    sendMessage(message)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dados.nome])
+
+
+  useEffect(() => {
+    if (!isConnected) return
+    if (!messages[messages.length - 1]) return
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lestMessages = JSON.parse(messages[messages.length - 1]) as any;
+
+    switch (lestMessages.type) {
+
+      case 'existing-users':
+        setDevices(lestMessages.users)
+        break;
+      case 'user-disconnected':
+        setDevices(prevDevices => prevDevices.filter(device => device.userId !== lestMessages.userId));
+        break;
+      case 'new-user':
+        setDevices(prevDevices => [...prevDevices, lestMessages.user]);
+        break;
+      case 'connection':
+        setDados(prevDados => {
+          const newDados = { ...prevDados, id: lestMessages.userId }
+          return newDados
+        })
+        break;
+      case 'user-renamed':
+        setDevices(prevDevices =>
+          prevDevices.map(device =>
+            device.userId === lestMessages.userId ? { ...device, name: lestMessages.name } : device
+          )
+        );
+        break;
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages])
 
   return (
     <div className="w-full max-w-6xl">
       <h2 className="text-2xl font-semibold mb-4 text-foreground text-center">Dispositivos Conectados</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {devices.map((device, index) => (
-          <DeviceItem key={index} name={device} />
+          <DeviceItem key={index} name={device.name} />
         ))}
       </div>
     </div>
