@@ -149,16 +149,16 @@ server.register(async function (fastify) {
           notifyUsersOnSameIp(connection);
           break;
 
-        case 'device-name':
+        case 'device-name':          
           if (!message.data) return;
           const { uuid, name } = message.data;
-          const conn = connections.get(uuid!);
+          const conn = connections.get(uuid!);          
           if (conn) {
             conn.name = name;
             // Notify others about name update
             Array.from(connections.values())
               .filter(c => c.ip === conn.ip && c.userId !== uuid)
-              .forEach(c => {
+              .forEach(c => {              
                 c.socket.send(JSON.stringify({
                   type: 'user-renamed',
                   userId: uuid,
