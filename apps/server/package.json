@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "start:prod": "yarn build && pm2 start ecosystem.config.js --env production"
   },
   "dependencies": {
     "@fastify/websocket": "^11.0.2",
