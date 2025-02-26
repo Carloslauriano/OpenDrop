@@ -115,7 +115,8 @@ server.register(async function (fastify) {
         case 'hello':
           const userAgent = new UAParser(req.headers['user-agent']).getResult();
           const userId = crypto.randomUUID();
-          const ip = req.headers['x-forwarded-for'] as string || req.ip;
+            const ipHeader = req.headers['x-forwarded-for'] as string;
+            const ip = ipHeader ? ipHeader.split(',')[0].trim() : req.ip;
           const ipLocal = message.data?.ipLocal || 'unknown';
           const initialName = message.data?.name || 'unknown';
 
