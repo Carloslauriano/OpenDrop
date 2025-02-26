@@ -28,7 +28,7 @@ export default function Home() {
               <ThemeToggle />
             </div>
           </header>
-          <main className="flex min-h-screen flex-col items-center p-24 relative">
+          <main className="flex flex-col items-center p-24 relative">
             <DeviceList />
             <FileReceivedModal />
             <Toaster />

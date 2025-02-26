@@ -8,7 +8,8 @@ import { UserContexto } from "@/contexts/user-context"
 export default function DeviceList() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [devices, setDevices] = useState<any[]>([])
-  const { isConnected, messages, sendMessage } = useSocket('ws://127.0.0.1:8080/ws')
+  const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'ws://127.0.0.1:8080/ws';
+  const { isConnected, messages, sendMessage } = useSocket(socketUrl);
 
   const connection = useContext(UserContexto);
   if (!connection) throw new Error("UserNameDisplay deve ser utilizado dentro do ConnectionProvider");
