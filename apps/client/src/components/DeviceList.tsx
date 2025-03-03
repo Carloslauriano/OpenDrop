@@ -9,6 +9,7 @@ export default function DeviceList() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [devices, setDevices] = useState<any[]>([])
   const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'ws://127.0.0.1:8080/ws';
+  const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
   const { isConnected, messages, sendMessage } = useSocket(socketUrl);
 
   const connection = useContext(UserContexto);
@@ -18,14 +19,34 @@ export default function DeviceList() {
   useEffect(() => {
     if (isConnected && dados.nome) {
       sendMessage(JSON.stringify({ type: 'hello', data: { name: dados.nome } }))
+
+      const pc = new RTCPeerConnection()
+      setPeerConnection(pc);
+
+      pc.onicecandidate = (event) => {
+        if (event.candidate && isConnected) {
+          console.log({ type: 'candidate', candidate: event.candidate });
+        }
+      }
+
+      pc.createOffer()
+        .then((offer) => {
+          return pc.setLocalDescription(offer).then(() => offer);
+        })
+        .then((offer) => {
+          const message = JSON.stringify({ type: 'webrtc-offer', sdp: offer.sdp })
+          sendMessage(message)
+        })
+
+      return () => {
+        pc.close();
+      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected])
 
   useEffect(() => {
     const message = JSON.stringify({ type: 'device-name', data: { name: dados.nome, uuid: dados.id } })
-    console.log(message);
-    
     sendMessage(message)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dados.nome])
