@@ -9,6 +9,7 @@ export function DonateButton() {
         target="_blank"
         rel="noopener noreferrer"
         className="text-foreground hover:text-foreground/80"
+        aria-label="Fazer uma doação"
       >
         <Heart className="h-[1.2rem] w-[1.2rem]" />
         <span className="sr-only">Fazer uma doação</span>

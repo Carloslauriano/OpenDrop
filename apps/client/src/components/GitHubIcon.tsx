@@ -9,6 +9,7 @@ export function GitHubIcon() {
         target="_blank"
         rel="noopener noreferrer"
         className="text-foreground hover:text-foreground/80"
+        aria-label="GitHub repository"
       >
         <SiGithub 
           className="h-[1.2rem] w-[1.2rem]"
