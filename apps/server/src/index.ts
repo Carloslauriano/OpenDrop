@@ -1,8 +1,6 @@
 import fastify, { FastifyRequest } from 'fastify';
 import websocket from '@fastify/websocket';
 import { UAParser } from 'ua-parser-js';
-import { log } from 'console';
-
 
 const server = fastify();
 
@@ -10,7 +8,6 @@ const server = fastify();
 server.register(websocket, {
   options: { maxPayload: 1048576 }
 });
-
 
 type socketMessage = {
   type: 'hello' | 'device-name' | 'webrtc-offer' | 'webrtc-answer' | 'webrtc-candidate'
@@ -75,7 +72,22 @@ function notifyUsersOnSameIp(newUser: Connection) {
 }
 
 server.register(async function (fastify) {
-  server.get('/ws', { websocket: true }, (socket: WebSocket, req: FastifyRequest) => {
+  server.get('/ws', { websocket: true }, (socket: WebSocket, req: FastifyRequest) => {  
+
+    (socket as any).isAlive = true;
+
+    (socket as any).on('pong', () => {
+      (socket as any).isAlive = true;
+    });
+
+    const interval = setInterval(() => {
+      if (!(socket as any).isAlive) {
+        socket.close(1001, 'inatividade');
+        return 
+      }
+      (socket as any).isAlive = false;
+      (socket as any).ping();
+    }, 5000);
 
     socket.onclose = () => {
       // Remove connection when user disconnects
@@ -98,6 +110,7 @@ server.register(async function (fastify) {
             });
         }
       }
+      clearInterval(interval);     
     };
 
     socket.onmessage = (event: MessageEvent) => {
@@ -208,3 +221,4 @@ server.listen({ port, host: '0.0.0.0' }, (err, address) => {
   }
   console.log(`Servidor rodando em ${address}`);
 });
+
