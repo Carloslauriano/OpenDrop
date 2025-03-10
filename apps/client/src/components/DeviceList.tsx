@@ -1,12 +1,10 @@
 "use client"
 
-import { useEffect, useContext, useState } from "react"
+import { useEffect, useContext } from "react"
 import DeviceItem from "./DeviceItem"
 import { UserContexto } from "@/contexts/user-context"
 
 export default function DeviceList() {
-  const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
-
   const connection = useContext(UserContexto);
   if (!connection) throw new Error("DeviceList deve ser utilizado dentro do ConnectionProvider");
   const { dados, setDados, isConnected, messages, sendMessage, devices, setDevices } = connection;
@@ -14,28 +12,6 @@ export default function DeviceList() {
   useEffect(() => {
     if (isConnected && dados.nome) {
       sendMessage(JSON.stringify({ type: 'hello', data: { name: dados.nome } }))
-
-      const pc = new RTCPeerConnection()
-      setPeerConnection(pc);
-
-      pc.onicecandidate = (event) => {
-        if (event.candidate && isConnected) {
-          console.log({ type: 'candidate', candidate: event.candidate });
-        }
-      }
-
-      pc.createOffer()
-        .then((offer) => {
-          return pc.setLocalDescription(offer).then(() => offer);
-        })
-        .then((offer) => {
-          const message = JSON.stringify({ type: 'webrtc-offer', sdp: offer.sdp })
-          sendMessage(message)
-        })
-
-      return () => {
-        pc.close();
-      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected])
