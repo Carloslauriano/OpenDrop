@@ -74,14 +74,14 @@ export function UserNameDisplay() {
             placeholder="Seu nome"
             className="max-w-[200px]"
           />
-          <Button onClick={handleNameSubmit}>Salvar</Button>
+            <Button onClick={handleNameSubmit} aria-label="Salvar nome">Salvar</Button>
         </div>
       ) : (
         <div className="flex items-center space-x-2">
           <span className="text-lg font-semibold">{userName ? `Seu Nome: ${userName}` : "Defina seu nome"}</span>
-          <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)} className="hidden sm:inline-flex">
+            <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)} className="hidden sm:inline-flex" aria-label="Editar nome">
             <Edit2 className="h-4 w-4" />
-          </Button>
+            </Button>
         </div>
       )}
     </div>
