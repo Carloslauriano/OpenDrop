@@ -1,19 +1,26 @@
 "use client"
 
 import type React from "react"
-import { useState, useRef } from "react"
+import { useState, useRef, useContext } from "react"
 import { Laptop, Upload } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { toast } from "@/hooks/use-toast"
 import { useFileReceive } from "@/lib/fileReceiveContext"
+import { UserContexto } from "@/contexts/user-context"
 
 interface DeviceItemProps {
   name: string
 }
 
 export default function DeviceItem({ name }: DeviceItemProps) {
+  const connection = useContext(UserContexto);
+  if (!connection) throw new Error("DeviceItem deve ser utilizado dentro do ConnectionProvider");
+  const { } = connection;
+
+
+
   const [isUploading, setIsUploading] = useState(false)
   const [progress, setProgress] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)

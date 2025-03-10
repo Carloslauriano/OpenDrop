@@ -12,13 +12,13 @@ export function UserNameDisplay() {
   const [userName, setUserName] = useState("")
   const [isEditing, setIsEditing] = useState(false)
 
-  const connection  = useContext(UserContexto);
+  const connection = useContext(UserContexto);
   if (!connection) throw new Error("UserNameDisplay deve ser utilizado dentro do ConnectionProvider");
-  const { setDados } = connection;
+  const { dados, setDados, sendMessage } = connection;
 
   useEffect(() => {
     const storedName = localStorage.getItem("userName");
-  
+
     if (storedName) {
       setUserName(storedName);
       setDados((prevDados) => ({ ...prevDados, nome: storedName }));
@@ -30,15 +30,15 @@ export function UserNameDisplay() {
       setUserName(randomName);
       setDados((prevDados) => ({ ...prevDados, nome: randomName }));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value)
   }
 
-  const handleNameSubmit = () => {    
-    if (userName == ''){
+  const handleNameSubmit = () => {
+    if (userName == '') {
       const customFaker = new Faker({
         locale: [base, pt_BR, en],
       });
@@ -50,12 +50,17 @@ export function UserNameDisplay() {
       setDados((prevDados) => ({ ...prevDados, nome: randomName }));
       setIsEditing(false)
 
+      const message = JSON.stringify({ type: 'device-name', data: { name: randomName, uuid: dados.id } })
+      sendMessage(message)
+
       return
     }
 
     localStorage.setItem("userName", userName)
     setDados((prevDados) => ({ ...prevDados, nome: userName }));
     setIsEditing(false)
+    const message = JSON.stringify({ type: 'device-name', data: { name: userName, uuid: dados.id } })
+    sendMessage(message)
   }
 
   return (

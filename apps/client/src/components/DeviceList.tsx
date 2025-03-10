@@ -1,19 +1,13 @@
 "use client"
 
-import { useState, useEffect, useContext } from "react"
+import { useEffect, useContext } from "react"
 import DeviceItem from "./DeviceItem"
-import { useSocket } from "@/hooks/use-socket"
 import { UserContexto } from "@/contexts/user-context"
 
 export default function DeviceList() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [devices, setDevices] = useState<any[]>([])
-  const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'ws://127.0.0.1:8080/ws';
-  const { isConnected, messages, sendMessage } = useSocket(socketUrl);
-
   const connection = useContext(UserContexto);
-  if (!connection) throw new Error("UserNameDisplay deve ser utilizado dentro do ConnectionProvider");
-  const { dados, setDados } = connection;
+  if (!connection) throw new Error("DeviceList deve ser utilizado dentro do ConnectionProvider");
+  const { dados, setDados, isConnected, messages, sendMessage, devices, setDevices } = connection;
 
   useEffect(() => {
     if (isConnected && dados.nome) {
@@ -21,14 +15,6 @@ export default function DeviceList() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected])
-
-  useEffect(() => {
-    const message = JSON.stringify({ type: 'device-name', data: { name: dados.nome, uuid: dados.id } })
-    console.log(message);
-    
-    sendMessage(message)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dados.nome])
 
 
   useEffect(() => {
