@@ -3,7 +3,6 @@
 import { useEffect, useContext } from "react"
 import DeviceItem from "./DeviceItem"
 import { UserContexto } from "@/contexts/user-context"
-import { DeviceClass } from "@/utils/device-class";
 
 export default function DeviceList() {
   const connection = useContext(UserContexto);
@@ -33,8 +32,7 @@ export default function DeviceList() {
     switch (lestMessages.type) {
 
       case 'existing-users':
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setDevices(lestMessages.users.map((user: any) => new DeviceClass(user.userId, user)))
+        setDevices(lestMessages.users)
         break;
       case 'user-disconnected':
         setDevices(prevDevices => prevDevices.filter(device => device.userId !== lestMessages.userId));
@@ -49,11 +47,11 @@ export default function DeviceList() {
         })
         break;
       case 'user-renamed':
-        devices.map(device => {
-          if (device.userId === lestMessages.userId) {
-            device.changeName(lestMessages.name)
-          }
-        })
+        setDevices(prevDevices =>
+          prevDevices.map(device =>
+            device.userId === lestMessages.userId ? { ...device, name: lestMessages.name } : device
+          )
+        );
         break;
     }
 
