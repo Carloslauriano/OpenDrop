@@ -6,8 +6,8 @@ import { Laptop, Upload } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { toast } from "@/hooks/use-toast"
-import { useFileReceive } from "@/lib/fileReceiveContext"
+// import { toast } from "@/hooks/use-toast"
+// import { useFileReceive } from "@/lib/fileReceiveContext"
 import { UserContexto } from "@/contexts/user-context"
 import { DeviceClass } from "@/utils/device-class"
 
@@ -23,7 +23,7 @@ export default function DeviceItem({ device }: DeviceItemProps) {
   const [isUploading, setIsUploading] = useState(false)
   const [progress, setProgress] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const { setReceivedFile } = useFileReceive()
+  // const { setReceivedFile } = useFileReceive()
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
