@@ -9,13 +9,10 @@ import { Progress } from "@/components/ui/progress"
 import { toast } from "@/hooks/use-toast"
 import { useFileReceive } from "@/lib/fileReceiveContext"
 import { UserContexto } from "@/contexts/user-context"
+import { DeviceClass } from "@/utils/device-class"
 
 interface DeviceItemProps {
-  device: DeviceProps
-}
-
-interface DeviceProps {
-  name: string
+  device: DeviceClass
 }
 
 export default function DeviceItem({ device }: DeviceItemProps) {
